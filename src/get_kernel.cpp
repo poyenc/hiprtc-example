@@ -16,6 +16,8 @@ namespace detail {
 template <typename T>
 inline constexpr std::string_view get_type_name();
 
+/// FIXME: It would be better if we can use something like nvrtcGetTypeName() to get typename from given std::type_info object.
+///        Then we can know the typename of a dependent type in templates.
 template <>
 inline constexpr std::string_view get_type_name<float>() {
   return "float";
@@ -35,6 +37,9 @@ std::string_view to_string(Action action) {
 
 template <typename DataType, std::size_t LPerBlock>
 class ConcreteKernel final : public Kernel<DataType> {
+  /// FIXME: It would be better if we can use hiprtcGetLoweredName() to get mangled kernel name without
+  ///        instantiating templates. Then we can store kernel name in externel storage and retrieve it
+  ///        later separately in different processes.
   static std::optional<std::string> mangled_kernel_name;
 
   static std::string get_module_file_name(std::string_view mangled_kernel_name) { return std::string(mangled_kernel_name) + ".module"; }
