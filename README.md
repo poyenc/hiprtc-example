@@ -1,4 +1,9 @@
-### Following step below to build example
+### The Problem
+
+I was asked to provide a concrete example to showcase how we want to employ HIP RTC to compile
+templated kernels & use them later.
+
+### Build The Example
 
 ```console
 $ mkdir -p build && cd build
